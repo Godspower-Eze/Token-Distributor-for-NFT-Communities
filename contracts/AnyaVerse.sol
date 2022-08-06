@@ -252,18 +252,38 @@ contract AnyaVerse is ERC721URIStorageUpgradeable, AccessControlUpgradeable {
         return anyaToken.balanceOf(address(this));
     }
 
-    function approveSubscription() external {
+    // @dev used to claim subscriptions
+    function claim() external {
         idaV1.host.callAgreement(
             idaV1.ida,
             abi.encodeWithSelector(
-                idaV1.ida.approveSubscription.selector,
+                idaV1.ida.claim.selector,
                 anyaToken,
                 address(this),
                 INDEX_ID,
+                _msgSender(),
                 new bytes(0)
             ),
             new bytes(0)
         );
+    }
+
+    /// @dev Gets an index by its ID and publisher.
+    /// @return exist True if the index exists.
+    /// @return indexValue Total value of the index.
+    /// @return totalUnitsApproved Units of the index approved by subscribers.
+    /// @return totalUnitsPending Units of teh index not yet approved by subscribers.
+    function getIndex()
+        external
+        view
+        returns (
+            bool exist,
+            uint128 indexValue,
+            uint128 totalUnitsApproved,
+            uint128 totalUnitsPending
+        )
+    {
+        return idaV1.ida.getIndex(anyaToken, address(this), INDEX_ID);
     }
 
     function supportsInterface(bytes4 interfaceId) public view override(ERC721Upgradeable, AccessControlUpgradeable) returns (bool) {
