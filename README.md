@@ -1,4 +1,4 @@
-# NFT Distributor
+# Token-Distributor for NFT Communities
 
 Building a money streaming application to reward nft holders using Superfuild.
 
