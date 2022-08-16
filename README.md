@@ -1,4 +1,4 @@
-# Anya Final Project
+# NFT Distributor
 
 Building a money streaming application to reward nft holders using Superfuild.
 
